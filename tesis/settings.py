@@ -25,7 +25,7 @@ SECRET_KEY = '9p9y81*4sk22(na1nc7n&=z2d!4i1eec(_%7mvx0yzl!&s9ag^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.pythonanywhere.com']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'games.apps.GamesConfig',
 ]
 
 MIDDLEWARE = [
