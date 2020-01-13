@@ -1,0 +1,13 @@
+{% extends 'activities/base.html' %}
+
+{% block content %}
+    <div class="page-header">
+        <h1><a href="/">Lista de Actividades</a></h1>
+    </div>
+
+    {% for activityType in activitiesTypes %}
+        <div class="activity">
+            <h2><a href="/{{activityType.type}}"> Nombre: {{ activityType.name }} </a></h2>
+        </div>
+    {% endfor %}
+{% endblock %}

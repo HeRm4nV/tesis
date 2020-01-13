@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Reply
+from .models import Activity
 
 # Register your models here.
-admin.site.register(Reply)
+admin.site.register(Activity)
