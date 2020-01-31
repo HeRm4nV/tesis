@@ -19,6 +19,14 @@ def activities_types_list(request):
 
     return render(request, 'activities/activities_types_list.html', {'activitiesTypes': activitiesTypes})
 
+def sources(request, activityName):
+
+    return render(request, 'activities/sources/'+activityName+'.html', {'activityName': activityName})
+
+def js(request, activityName):
+
+    return render(request, 'activities/js/'+activityName+'.js', {'activityName': activityName})
+
 def activities_list(request, type):
 
     types = {
