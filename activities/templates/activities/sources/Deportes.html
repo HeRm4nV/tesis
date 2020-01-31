@@ -1,0 +1,118 @@
+{% extends 'activities/base.html' %}
+
+{% block content %}
+    <div class="page-header">
+        <h1><a href="/">Actividad de Deportes</a></h1>
+    </div>
+
+    <div class="activityCanvas">
+        <canvas id="ctx" width="900" height="500" style="position:relative; top:50px; left:50px; border:1px solid #000000">
+        <!-- This text is displayed if the visitor's browser does not support HTML5.
+      				You can change it, but it is a good idea to link to a description of a browser
+      				and provide some links to download some popular HTML5-compatible browsers. -->
+        Tu navegador no es compatible con esta aplicación, por favor descarga uno compatible con la nueva tecnología.
+        </canvas>
+    </div>
+
+    <!-- type="application/javascript" src="/js/Deportes.js" -->
+    <script>
+
+        var ctx = document.getElementById("ctx").getContext("2d");
+        ctx.font = '30px Arial'
+
+        var WIDTH = 900;
+        var HEIGHT = 500;
+        var timeWhenGameStarted = Date.now();
+
+        var mouse = {
+          x: 0,
+          y: 0
+        }
+
+
+        createEntity = function (name, image, x, y, spdX, spdY){
+            entity = {
+                id: name,
+                x: x,
+                y: y,
+                spdX: spdX,
+                spdY: spdY,
+                name: image
+            };
+
+            return entity;
+        }
+
+        updateEntityPosition = function (entity){
+            entity.x += entity.spdX;
+            entity.y += entity.spdY;
+
+            if (entity.x > WIDTH || entity.x < 0) {
+                entity.spdX *= -1;
+            }
+
+            if (entity.y > HEIGHT || entity.y < 0) {
+                entity.spdY *= -1;
+            }
+        }
+
+        drawEntity = function (entity) {
+            ctx.fillText(entity.name, entity.x, entity.y);
+        }
+
+        updateEntity = function (entity) {
+            updateEntityPosition(entity);
+            drawEntity(entity);
+        }
+
+        update = function () {
+            ctx.clearRect(0,0,WIDTH,HEIGHT);
+            drawEntity(player);
+            updateEntity(enemy);
+        }
+
+
+
+        getCursorPosition = function (canvas, event) {
+            // canvas:
+            const rect = canvas.getBoundingClientRect();
+            // rect.left and rect.top give us the position of canvas in the page
+            var mouseX = event.clientX - rect.left;
+            var mouseY = event.clientY - rect.top;
+            return [mouseX, mouseY];
+        }
+
+
+        clickOn = function (mousePosition) {
+            console.log("click on:", mouse)
+        }
+
+
+
+        const canvas = document.querySelector('canvas');
+        // mousemove for movement, mousedown for click
+
+        canvas.addEventListener('mousedown', function(e) {
+            mouse = getCursorPosition(canvas, e)
+            clickOn(mouse)
+        });
+
+        canvas.addEventListener('mousemove', function(e) {
+            var actualPosition = getCursorPosition(canvas, e);
+            player.x = actualPosition[0];
+            player.y = actualPosition[1];
+            console.log([player.x, player.y])
+        });
+
+
+
+
+        setInterval(update,50)
+
+        player = createEntity('player', 'P', 50, 40, 30, 5);
+        enemy = createEntity('enemy', 'E', 50, 40, 40, 15);
+
+    </script>
+
+    <!--iframe width="640" height="480" src="https://flowlab.io/game/embed/1330099" frameborder="0" allowfullscreen></iframe-->
+{% endblock %}
